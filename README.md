@@ -37,7 +37,7 @@ cp ./target/release/ffs ~/.claude/bin/
 }
 ```
 
-That's it. Now when you type `@filename` in Claude Code, ffs powers the autocomplete.
+That's it. Open a new Claude Code session for the settings to take effect, then `@filename` autocomplete will be powered by ffs.
 
 ## Usage
 
