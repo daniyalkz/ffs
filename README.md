@@ -4,7 +4,7 @@ Sub-millisecond file suggestion with typo tolerance.
 
 ## Why
 
-You're in a large codebase. You type `@authservice` to reference a file — nothing. Try `@AuthServce` (typo) — still nothing. Traditional tools like `find` and glob patterns choke on 200k+ file repositories, taking seconds when you need milliseconds.
+You're in Claude Code, working on a large codebase. You type `@authservice` to reference a file — nothing. Try `@AuthServce` (typo) — still nothing. Traditional tools like `find` and glob patterns choke on 200k+ file repositories, taking seconds when you need milliseconds.
 
 **ffs** fixes this:
 - **Blazingly fast** — sub-millisecond responses even on massive codebases (200k+ files)
@@ -19,13 +19,15 @@ Indexes your project files in SQLite and provides blazingly fast search with fuz
 
 ## Install
 
+To use ffs for faster file suggestion in Claude Code:
+
+**1. Build the binary:**
 ```bash
 cargo build --release
 cp ./target/release/ffs ~/.claude/bin/
 ```
 
-Then add to `~/.claude/settings.json`:
-
+**2. Configure Claude Code** — add to `~/.claude/settings.json`:
 ```json
 {
   "fileSuggestion": {
@@ -35,7 +37,7 @@ Then add to `~/.claude/settings.json`:
 }
 ```
 
-Now `@filename` autocomplete in Claude Code uses ffs.
+That's it. Now when you type `@filename` in Claude Code, ffs powers the autocomplete.
 
 ## Usage
 
