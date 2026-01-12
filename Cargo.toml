@@ -1,0 +1,27 @@
+[package]
+name = "ffs"
+version = "0.1.0"
+edition = "2024"
+description = "ffs (fast-file-suggestion) - Sub-millisecond file suggestion with typo tolerance using SQLite FTS5"
+license = "Apache-2.0"
+repository = "https://github.com/daniyalkz/ffs"
+keywords = ["cli", "autocomplete", "files", "fts5", "fuzzy"]
+categories = ["command-line-utilities", "development-tools"]
+
+[dependencies]
+# SQLite with FTS5 support - bundled for zero system dependencies
+rusqlite = { version = "0.38", features = ["bundled"] }
+
+# Fast parallel file walking (same engine as ripgrep)
+ignore = "0.4"
+
+# JSON parsing
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
