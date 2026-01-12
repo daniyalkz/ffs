@@ -80,6 +80,18 @@ Newline-separated file paths, relative to project root.
 - Auto-rebuilds after 5 minutes
 - Respects `.gitignore`
 
+## Technical Details
+
+For those curious about why ffs is fast:
+
+- **Pre-computed trigram index** — Trigrams are generated at build time and stored in SQLite with an index, not computed at query time
+- **Per-project isolation** — Each project gets its own index file via path hashing, no cross-contamination
+- **Parallel file walking** — Uses the `ignore` crate (ripgrep's engine) with multi-threaded directory traversal
+- **Proper gitignore support** — Handles `.gitignore`, global gitignore, and `.git/info/exclude` correctly
+- **Atomic index rebuilds** — Builds to temp file, then renames, so queries never see partial indexes
+- **Concurrent-safe locking** — mkdir-based locks prevent multiple processes from rebuilding simultaneously
+- **Zero external dependencies** — SQLite is bundled, no system libraries required
+
 ## Safety
 
 ffs includes guards to prevent Claude from accidentally accessing files outside your project:
