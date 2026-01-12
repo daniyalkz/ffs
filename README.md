@@ -41,27 +41,15 @@ That's it. Now when you type `@filename` in Claude Code, ffs powers the autocomp
 
 ## Usage
 
-```bash
-# Set the project directory to index
-export CLAUDE_PROJECT_DIR=/path/to/your/project
+After installation, just type `@` followed by a filename in Claude Code:
 
-# Search for files
-echo '{"query": "main", "limit": 10}' | ffs
-
-# Output: newline-separated file paths
-src/main.rs
-tests/main_test.rs
+```
+@authservice    → finds AuthenticationService.ts
+@config         → finds config.json, configuration.ts, etc.
+@scaner         → finds scanner.rs (typo-tolerant)
 ```
 
-### Input (stdin)
-
-JSON object with:
-- `query` - Search string (optional, empty returns shallowest files)
-- `limit` - Max results (optional, default 200, max 500)
-
-### Output (stdout)
-
-Newline-separated file paths, relative to project root.
+ffs handles indexing automatically. The first search takes a few seconds to build the index, then subsequent searches are sub-millisecond.
 
 ## How it works
 
@@ -101,6 +89,35 @@ ffs includes guards to prevent Claude from accidentally accessing files outside 
 - **Absolute paths only** — Prevents ambiguous paths that could resolve to unintended locations
 - **SQL injection prevention** — Queries sanitized to alphanumeric + `._-/` only
 - **Silent failure** — Returns empty results on errors, never exposes internals
+
+<details>
+<summary><strong>API Reference</strong> (for building tools on top of ffs)</summary>
+
+### CLI Interface
+
+```bash
+# Set the project directory to index
+export CLAUDE_PROJECT_DIR=/path/to/your/project
+
+# Search for files
+echo '{"query": "main", "limit": 10}' | ffs
+
+# Output: newline-separated file paths
+src/main.rs
+tests/main_test.rs
+```
+
+### Input (stdin)
+
+JSON object with:
+- `query` - Search string (optional, empty returns shallowest files)
+- `limit` - Max results (optional, default 200, max 500)
+
+### Output (stdout)
+
+Newline-separated file paths, relative to project root.
+
+</details>
 
 ## License
 
